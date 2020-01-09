@@ -29,7 +29,7 @@ class WC_Wompi_Logger {
 				}
 			}
 
-			$settings = get_option( 'woocommerce_wompi_settings' );
+			$settings = WC_Wompi::$settings;
 
 			if ( empty( $settings ) || isset( $settings['logging'] ) && 'yes' !== $settings['logging'] ) {
 				return;

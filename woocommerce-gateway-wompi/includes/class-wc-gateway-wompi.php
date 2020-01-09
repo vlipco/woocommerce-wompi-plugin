@@ -22,8 +22,7 @@ class WC_Gateway_Wompi extends WC_Gateway_Wompi_Custom {
         $this->description = $this->get_option('description');
         $this->testmode = $this->get_option('testmode');
         $this->supports = array(
-            'products',
-            //'refunds',
+            'products'
         );
         $this->public_key  = $this->testmode ? $this->get_option( 'test_public_key' ) : $this->get_option( 'public_key' );
         $this->private_key = $this->testmode ? $this->get_option( 'test_private_key' ) : $this->get_option( 'private_key' );
@@ -65,10 +64,10 @@ class WC_Gateway_Wompi extends WC_Gateway_Wompi_Custom {
     public function process_payment( $order_id ) {
         $order = new WC_Order( $order_id );
         if ( version_compare(WOOCOMMERCE_VERSION, '2.1.0', '>=') ) {
-            /* 2.1.0 */
+            /* >= 2.1.0 */
             $checkout_payment_url = $order->get_checkout_payment_url(true);
         } else {
-            /* 2.0.0 */
+            /* < 2.1.0 */
             $checkout_payment_url = get_permalink( get_option('woocommerce_pay_page_id') );
         }
 
@@ -79,12 +78,5 @@ class WC_Gateway_Wompi extends WC_Gateway_Wompi_Custom {
             'result' => 'success',
             'redirect' => add_query_arg( 'order_pay', $order_id, $checkout_payment_url )
         );
-    }
-
-    /**
-     * Refunds function
-     */
-    public function process_refund( $order_id, $amount = null, $reason = '' ) {
-
     }
 }

@@ -18,10 +18,6 @@ class WC_Wompi_Order_Statuses {
         add_action( 'init', array( $this, 'register_voided_post_status' ), 10 );
         add_filter( 'wc_order_statuses', array( $this, 'order_statuses' ) );
         add_action( 'woocommerce_process_shop_order_meta', array( $this, 'process_shop_order_meta' ) );
-
-        //add_action( 'woocommerce_order_status_changed', array( __CLASS__, 'order_status_changed' ), 10, 3 );
-        //add_action( 'woocommerce_order_edit_status', array( __CLASS__, 'order_status_changed' ), 10, 2 );
-        //add_action( "save_post_shop_order", array( __CLASS__, 'save_post_shop_order' ), 10, 3 );
     }
 
     /**
@@ -88,7 +84,7 @@ class WC_Wompi_Order_Statuses {
 
             if ( $status != 'completed' ||
                 ! self::check_voided_access( $order, $status ) ||
-                ! WC_Wompi_API::transaction_void( $order->get_transaction_id() )
+                ! WC_Wompi_API::instance()->transaction_void( $order->get_transaction_id() )
             ) {
                 $order->add_order_note( __( 'Unable to change status to Voided.', 'woocommerce-gateway-wompi' ) );
                 WC_Wompi_Logger::log( 'Unable to change status to Voided.' );

@@ -30,4 +30,11 @@ class WC_Wompi_Helper {
             return false;
         }
     }
+
+    /**
+     * Get amount in cents
+     */
+    public static function get_amount_in_cents( $amount ) {
+        return (int) ( $amount * 100 );
+    }
 }

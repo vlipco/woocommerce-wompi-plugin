@@ -2,94 +2,128 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Communicates with Wompi API.
+ * Communicates with Wompi API
  */
 class WC_Wompi_API {
 
     /**
      * Define API endpoints
      */
-    const API_ENDPOINT = '';
+    const API_ENDPOINT = 'https://production.wompi.co/v1';
     const API_ENDPOINT_TEST = 'https://sandbox.wompi.co/v1';
+
+    /**
+     * The single instance of the class
+     */
+    protected static $_instance = null;
 
     /**
      * API endpoint
      */
-    private static $endpoint = '';
-
-	/**
-	 * Private API Key.
-	 */
-	private static $private_key = '';
-
-	/**
-	 * Set private API Key.
-	 */
-	public static function set_private_key( $private_key ) {
-		self::$private_key = $private_key;
-	}
-
-	/**
-	 * Get private key.
-	 */
-	public static function get_private_key() {
-		if ( ! self::$private_key ) {
-			$options = get_option( 'woocommerce_wompi_settings' );
-
-			if ( isset( $options['testmode'], $options['private_key'], $options['test_private_key'] ) ) {
-			    if ( 'yes' === $options['testmode'] ) {
-                    self::set_private_key( $options['test_private_key'] );
-                    self::set_endpoint( self::API_ENDPOINT_TEST );
-                } else {
-                    self::set_private_key( $options['private_key'] );
-                    self::set_endpoint( self::API_ENDPOINT );
-                }
-			}
-		}
-		return self::$private_key;
-	}
+    private $endpoint = '';
 
     /**
-     * Set API endpoint
+     * Public API Key
      */
-    public static function set_endpoint( $endpoint ) {
-        self::$endpoint = $endpoint;
+    private $public_key = '';
+
+	/**
+	 * Private API Key
+	 */
+	private $private_key = '';
+
+    /**
+     * Supported currency
+     */
+    private $supported_currency = array();
+
+    /**
+     * Instance
+     */
+    public static function instance() {
+        if ( is_null( self::$_instance ) ) {
+            self::$_instance = new self();
+        }
+
+        return self::$_instance;
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct() {
+
+        $options = WC_Wompi::$settings;
+
+        if ( 'yes' === $options['testmode'] ) {
+            $this->endpoint = self::API_ENDPOINT_TEST;
+            $this->public_key = $options['test_public_key'];
+            $this->private_key = $options['test_private_key'];
+        } else {
+            $this->endpoint = self::API_ENDPOINT;
+            $this->public_key = $options['public_key'];
+            $this->private_key = $options['private_key'];
+        }
+
+        // Get supported currency
+        $this->supported_currency = $this->get_merchant_data('accepted_currencies');
+    }
+
+    /**
+     * Get API endpoint
+     */
+    public function get_endpoint() {
+        return $this->endpoint;
+    }
+
+    /**
+     * Get public key
+     */
+    public function get_public_key() {
+        return $this->public_key;
     }
 
 	/**
-	 * Get API endpoint
+	 * Get private key
 	 */
-	public static function get_endpoint() {
-		return self::$endpoint;
+    public function get_private_key() {
+        return $this->private_key;
 	}
 
+    /**
+     * Get supported currency
+     */
+    public function get_supported_currency() {
+        return $this->supported_currency;
+    }
+
 	/**
-	 * Generates the headers to pass to API request.
+	 * Generates the headers to pass to API request
 	 */
-	public static function get_headers() {
+    private function get_headers() {
 		return array(
-            "Content-type" => "application/json;charset=UTF-8",
-            'Authorization' => 'Bearer ' . self::get_private_key(),
+            'Authorization' => 'Bearer ' . $this->private_key,
         );
 	}
 
 	/**
 	 * Send the request to Wompi's API
 	 */
-	public static function request( $request, $data = '', $method = 'POST' ) {
-		WC_Wompi_Logger::log( 'Request: ' . self::$endpoint . $request . ' Request data: ' . print_r( $data, true ) );
+	public function request( $method, $request, $data = null, $use_headers = false ) {
+		WC_Wompi_Logger::log( 'Request: ' . $this->endpoint . $request . ' Request data: ' . print_r( $data, true ) );
 
-		$headers         = self::get_headers();
-		WC_Wompi_Logger::log( 'Headers: ' . print_r( $headers, true ) );
+		$params = array(
+            'method'  => $method,
+            'body'    => $data,
+        );
 
-		$response = wp_safe_remote_post(
-			self::$endpoint . $request,
-			array(
-				'method'  => $method,
-				'headers' => $headers,
-				'body'    => $data,
-			)
-		);
+		if ( $use_headers ) {
+            $headers         = $this->get_headers();
+            $params['headers'] = $headers;
+            WC_Wompi_Logger::log( 'Headers: ' . print_r( $headers, true ) );
+        }
+
+		$response = wp_safe_remote_post( $this->endpoint . $request, $params );
 
 		if ( is_wp_error( $response ) || empty( $response['body'] ) ) {
 			WC_Wompi_Logger::log( 'ERROR Response: ' . print_r( $response, true ) );
@@ -103,7 +137,27 @@ class WC_Wompi_API {
     /**
      * Transaction void
      */
-	public static function transaction_void( $transaction_id ) {
-        return self::request( '/transactions/' . $transaction_id . '/void' );
+	public function transaction_void( $transaction_id ) {
+        return $this->request( 'POST', '/transactions/' . $transaction_id . '/void', null, true );
+    }
+
+    /**
+     * Get merchant data
+     */
+    public function get_merchant_data( $type ) {
+        $response = $this->request( 'GET', '/merchants/' . $this->public_key  );
+        if ( isset( $response->data ) && is_object( $response->data ) ) {
+            $data = $response->data;
+            switch ( $type ) {
+                case 'accepted_currencies':
+                    return ( isset( $data->accepted_currencies ) && is_array( $data->accepted_currencies ) ) ? $data->accepted_currencies : array();
+                default:
+                    return $data;
+            }
+        } else {
+            return array();
+        }
     }
 }
+
+WC_Wompi_API::instance();

@@ -7,12 +7,17 @@ defined( 'ABSPATH' ) || exit;
 class WC_Wompi {
 
     /**
-     * The single instance of the class.
+     * The single instance of the class
      */
     protected static $_instance = null;
 
     /**
-     * Main Instance.
+     * Settings
+     */
+    public static $settings = array();
+
+    /**
+     * Instance
      */
     public static function instance() {
         if ( is_null( self::$_instance ) ) {
@@ -23,22 +28,22 @@ class WC_Wompi {
     }
 
     /**
-     * Cloning is forbidden.
+     * Cloning is forbidden
      */
     public function __clone() {}
 
     /**
-     * Unserializing instances of this class is forbidden.
+     * Unserializing instances of this class is forbidden
      */
     public function __wakeup() {}
 
     /**
-     * Constructor.
+     * Constructor
      */
     public function __construct() {
 
         // Get settings
-        $settings = get_option('woocommerce_wompi_settings');
+        self::$settings = get_option('woocommerce_wompi_settings');
 
         // Includes
         require_once WC_WOMPI_PLUGIN_PATH . '/includes/class-wc-wompi-helper.php';
@@ -54,9 +59,10 @@ class WC_Wompi {
         }
 
         // Hooks
+        add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
         add_filter( 'woocommerce_payment_gateways', array( $this, 'add_gateway' ) );
 
-        if ( $settings['enabled'] == 'yes' ) {
+        if ( self::$settings['enabled'] == 'yes' ) {
             add_action( 'woocommerce_before_checkout_billing_form', array( 'WC_Gateway_Wompi_Custom', 'before_checkout_billing_form' ) );
             add_action( 'woocommerce_after_checkout_validation', array( 'WC_Gateway_Wompi_Custom', 'checkout_validation' ), 10, 2 );
             add_action( 'woocommerce_thankyou_order_received_text', array( 'WC_Gateway_Wompi_Custom', 'thankyou_order_received_text' ) );
@@ -77,6 +83,13 @@ class WC_Wompi {
         );
 
         return array_merge( $plugin_links, $links );
+    }
+
+    /**
+     * Admin enqueue scripts
+     */
+    public function admin_enqueue_scripts() {
+        wp_enqueue_style( 'wc_wompi_admin_styles', WC_WOMPI_PLUGIN_URL . '/assets/css/admin.css' );
     }
 
     /**

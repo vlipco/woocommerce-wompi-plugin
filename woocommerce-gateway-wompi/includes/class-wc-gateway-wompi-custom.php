@@ -25,12 +25,7 @@ class WC_Gateway_Wompi_Custom extends WC_Payment_Gateway {
      * Returns all supported currencies for this payment method
      */
     public function get_supported_currency() {
-        return apply_filters(
-            'wc_wompi_supported_currencies',
-            array(
-                'COP',
-            )
-        );
+        return apply_filters( 'wc_wompi_supported_currencies', WC_Wompi_API::instance()->get_supported_currency() );
     }
 
     /**
@@ -45,9 +40,9 @@ class WC_Gateway_Wompi_Custom extends WC_Payment_Gateway {
             <script
                 src="https://checkout.wompi.co/widget.js"
                 data-render="button"
-                data-public-key="'.$this->get_option( 'test_public_key' ).'"
-                data-currency="COP"
-                data-amount-in-cents="'.round( $order->get_total() * 1000 ).'"
+                data-public-key="'.( $this->get_option( 'testmode' ) ? $this->get_option( 'test_public_key' ) : $this->get_option( 'public_key' ) ).'"
+                data-currency="'.get_woocommerce_currency().'"
+                data-amount-in-cents="'.WC_Wompi_Helper::get_amount_in_cents( $order->get_total() ).'"
                 data-reference="'.$order_id.'"
                 data-redirect-url="'.$order->get_checkout_order_received_url().'"
                 >
@@ -113,7 +108,7 @@ class WC_Gateway_Wompi_Custom extends WC_Payment_Gateway {
      * Validates that the order meets the minimum order amount
      */
     public static function validate_minimum_order_amount( $amount ) {
-        if ( ($amount * 1000) < self::MINIMUM_ORDER_AMOUNT ) {
+        if ( WC_Wompi_Helper::get_amount_in_cents( $amount ) < self::MINIMUM_ORDER_AMOUNT ) {
             return false;
         } else {
             return true;

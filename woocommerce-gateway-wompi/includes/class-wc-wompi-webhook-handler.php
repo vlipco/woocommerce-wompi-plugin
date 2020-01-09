@@ -19,11 +19,11 @@ class WC_Wompi_Webhook_Handler {
 	public function check_for_webhook() {
 
 		if ( ! WC_Wompi_Helper::is_webhook(true) ) {
-			return;
+			return false;
 		}
 
         $response = json_decode( file_get_contents('php://input') );
-        if ( $response ) {
+        if ( is_object( $response ) ) {
             WC_Wompi_Logger::log( 'Webhook response: ' . print_r( $response, true ) );
             $this->process_webhook( $response );
         } else {
@@ -56,8 +56,9 @@ class WC_Wompi_Webhook_Handler {
         if ( isset( $data->transaction ) ) {
             $transaction = $data->transaction;
             $order = new WC_Order( $transaction->reference );
-            if ( $this->is_payment_valid( $order, $transaction ) ) {
-                // Apply transaction status
+            if( $this->is_payment_valid( $order, $transaction ) ) {
+                // Update order data
+                $this->update_order_data( $order, $transaction );
                 $this->apply_status( $order, $transaction );
                 status_header( 200 );
             } else {
@@ -65,7 +66,7 @@ class WC_Wompi_Webhook_Handler {
                 status_header( 400 );
             }
         } else {
-            WC_Wompi_Logger::log( 'TRANSACTION ID Not Found' );
+            WC_Wompi_Logger::log( 'TRANSACTION Response Not Found' );
             status_header( 400 );
         }
     }
@@ -82,7 +83,7 @@ class WC_Wompi_Webhook_Handler {
             WC_Wompi_Logger::log( 'Payment method incorrect' . ' TRANSACTION ID: ' . $transaction->id . ' ORDER ID: ' . $order->get_id() . ' PAYMENT METHOD: ' . $order->get_payment_method() );
             return false;
         }
-        $amount = $order->get_total() * 1000;
+        $amount = WC_Wompi_Helper::get_amount_in_cents( $order->get_total() );
         if ( $transaction->amount_in_cents != $amount ) {
             WC_Wompi_Logger::log( 'Amount incorrect' . ' TRANSACTION ID: ' . $transaction->id . ' ORDER ID: ' . $order->get_id() . ' AMOUNT: ' . $amount );
             return false;
@@ -97,7 +98,6 @@ class WC_Wompi_Webhook_Handler {
     public function apply_status( $order, $transaction ) {
         switch( $transaction->status ) {
             case 'APPROVED' :
-                $this->update_order_data( $order, $transaction );
                 $order->payment_complete( $transaction->id );
                 $this->update_transaction_status( $order, __('Wompi payment APPROVED. TRANSACTION ID: ', 'woocommerce-gateway-wompi') . ' (' . $transaction->id . ')', 'completed' );
                 break;
@@ -116,18 +116,21 @@ class WC_Wompi_Webhook_Handler {
      * Update order data
      */
     public function update_order_data( $order, $transaction ) {
-        // Set transaction id
-        $order->update_meta_data( '_transaction_id', $transaction->id );
-        // Set customer email
-        $order->update_meta_data( '_billing_email', $transaction->customer_email );
-        // Parse full name
-        $full_name = WC_Wompi_Helper::split_fullname( $transaction->customer_data->full_name );
-        // Set first name
-        $order->update_meta_data( '_billing_first_name', $full_name[0] );
-        // Set last name
-        $order->update_meta_data( '_billing_last_name', $full_name[1] );
-        // Set phone number
-        $order->update_meta_data( '_billing_phone', $transaction->customer_data->phone_number );
+        // Check if order data was set
+        if ( ! $order->get_transaction_id() ) {
+            // Set transaction id
+            $order->update_meta_data( '_transaction_id', $transaction->id );
+            // Set customer email
+            $order->update_meta_data( '_billing_email', $transaction->customer_email );
+            // Parse full name
+            $full_name = WC_Wompi_Helper::split_fullname( $transaction->customer_data->full_name );
+            // Set first name
+            $order->update_meta_data( '_billing_first_name', $full_name[0] );
+            // Set last name
+            $order->update_meta_data( '_billing_last_name', $full_name[1] );
+            // Set phone number
+            $order->update_meta_data( '_billing_phone', $transaction->customer_data->phone_number );
+        }
     }
 
     /**
