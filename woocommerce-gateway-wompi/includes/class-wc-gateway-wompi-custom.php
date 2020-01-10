@@ -25,7 +25,7 @@ class WC_Gateway_Wompi_Custom extends WC_Payment_Gateway {
      * Returns all supported currencies for this payment method
      */
     public function get_supported_currency() {
-        return apply_filters( 'wc_wompi_supported_currencies', WC_Wompi_API::instance()->get_supported_currency() );
+        return apply_filters( 'wc_wompi_supported_currencies', WC_Wompi_API::instance()->supported_currency );
     }
 
     /**

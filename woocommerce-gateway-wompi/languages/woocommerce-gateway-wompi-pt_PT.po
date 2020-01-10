@@ -19,16 +19,6 @@ msgstr ""
 "X-Domain: woocommerce-gateway-wompi\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: includes/admin/class-wc-wompi-admin-notices.php:64
-#, php-format
-msgid ""
-"Wompi is almost ready. To get started, <a href=\"%s\">set your Wompi account "
-"keys</a>."
-msgstr ""
-"Wompi está em modo de teste no entanto suas chaves de teste podem não ser "
-"válidas. Por favor, vá para suas configurações e, definir as chaves da <a "
-"href=\"%s\">sua conta Wompi</a>."
-
 #: includes/admin/class-wc-wompi-admin-notices.php:73
 #, php-format
 msgid ""
@@ -70,10 +60,6 @@ msgstr "Título"
 msgid "This controls the title which the user sees during checkout."
 msgstr ""
 "Isso controla a descrição que o usuário vê durante a finalização da compra."
-
-#: includes/admin/wompi-settings.php:18
-msgid "Wompi"
-msgstr ""
 
 #: includes/admin/wompi-settings.php:22
 msgid "Description"
@@ -188,14 +174,14 @@ msgstr ""
 #: includes/class-wc-wompi-order-statuses.php:56
 msgctxt "Order status"
 msgid "Voided"
-msgstr ""
+msgstr "Anulado"
 
 #: includes/class-wc-wompi-order-statuses.php:33
 #, php-format
 msgid "Voided <span class=\"count\">(%s)</span>"
 msgid_plural "Voided <span class=\"count\">(%s)</span>"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Anulado <span class=\"count\">(%s)</span>"
+msgstr[1] "Anulado <span class=\"count\">(%s)</span>"
 
 #: includes/class-wc-wompi-order-statuses.php:89
 msgid "Unable to change status to Voided."
@@ -203,7 +189,7 @@ msgstr "Não foi possível alterar o status para Anulado."
 
 #: includes/class-wc-wompi-webhook-handler.php:65
 msgid "Wompi payment validation is invalid. TRANSACTION ID: "
-msgstr ""
+msgstr "A validação do pagamento Wompi é inválida. TRANSACTION ID: "
 
 #: includes/class-wc-wompi-webhook-handler.php:102
 msgid "Wompi payment APPROVED. TRANSACTION ID: "

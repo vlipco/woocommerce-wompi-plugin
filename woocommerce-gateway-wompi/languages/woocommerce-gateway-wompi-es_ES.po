@@ -19,15 +19,6 @@ msgstr ""
 "X-Domain: woocommerce-gateway-wompi\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: includes/admin/class-wc-wompi-admin-notices.php:64
-#, php-format
-msgid ""
-"Wompi is almost ready. To get started, <a href=\"%s\">set your Wompi account "
-"keys</a>."
-msgstr ""
-"Wompi está casi listo. Para empezar, configure las claves de cuenta de <a "
-"href=\"%s\">Wompi.</a>"
-
 #: includes/admin/class-wc-wompi-admin-notices.php:73
 #, php-format
 msgid ""
@@ -70,10 +61,6 @@ msgstr "Título"
 #: includes/admin/wompi-settings.php:17
 msgid "This controls the title which the user sees during checkout."
 msgstr "Esto controla el título que el usuario ve durante el pago."
-
-#: includes/admin/wompi-settings.php:18
-msgid "Wompi"
-msgstr ""
 
 #: includes/admin/wompi-settings.php:22
 msgid "Description"
@@ -188,14 +175,14 @@ msgstr ""
 #: includes/class-wc-wompi-order-statuses.php:56
 msgctxt "Order status"
 msgid "Voided"
-msgstr ""
+msgstr "Anulado"
 
 #: includes/class-wc-wompi-order-statuses.php:33
 #, php-format
 msgid "Voided <span class=\"count\">(%s)</span>"
 msgid_plural "Voided <span class=\"count\">(%s)</span>"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Anulado <span class=\"count\">(%s)</span>"
+msgstr[1] "Anulado <span class=\"count\">(%s)</span>"
 
 #: includes/class-wc-wompi-order-statuses.php:89
 msgid "Unable to change status to Voided."
@@ -227,7 +214,7 @@ msgstr "Configuraciones"
 
 #: includes/class-wc-wompi.php:81
 msgid "Docs"
-msgstr ""
+msgstr "Docs"
 
 #: includes/class-wc-wompi.php:82
 msgid "Support"

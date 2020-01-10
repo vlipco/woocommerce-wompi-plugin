@@ -15,7 +15,7 @@ return apply_filters(
 			'title'       => __( 'Title', 'woocommerce-gateway-wompi' ),
 			'type'        => 'text',
 			'description' => __( 'This controls the title which the user sees during checkout.', 'woocommerce-gateway-wompi' ),
-			'default'     => __( 'Wompi', 'woocommerce-gateway-wompi' ),
+			'default'     => 'Wompi',
 			'desc_tip'    => true,
 		),
 		'description' => array(

@@ -65,36 +65,17 @@ class WC_Wompi_API {
             $this->private_key = $options['private_key'];
         }
 
-        // Get supported currency
+        // Supported_currency
         $this->supported_currency = $this->get_merchant_data('accepted_currencies');
     }
 
     /**
-     * Get API endpoint
+     * Getter
      */
-    public function get_endpoint() {
-        return $this->endpoint;
-    }
-
-    /**
-     * Get public key
-     */
-    public function get_public_key() {
-        return $this->public_key;
-    }
-
-	/**
-	 * Get private key
-	 */
-    public function get_private_key() {
-        return $this->private_key;
-	}
-
-    /**
-     * Get supported currency
-     */
-    public function get_supported_currency() {
-        return $this->supported_currency;
+    public function __get( $name ) {
+        if ( property_exists($this, $name) ) {
+            return $this->$name;
+        }
     }
 
 	/**
