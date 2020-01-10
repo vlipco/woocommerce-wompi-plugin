@@ -25,7 +25,7 @@
 			"status":"APPROVED",
 			"status_message":null,
 			"shipping_address":null,
-			"redirect_url":"https://test.howdy.digital/?wc-api=wc_wompi",
+			"redirect_url":"",
 			"payment_source_id":null,
 			"payment_link_id":null,
 			"customer_data":{
