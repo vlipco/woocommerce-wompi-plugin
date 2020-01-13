@@ -60,6 +60,15 @@ class WC_Gateway_Wompi extends WC_Gateway_Wompi_Custom {
     }
 
     /**
+     * Gets the transaction URL linked to Wompi dashboard
+     */
+    public function get_transaction_url( $order ) {
+        $this->view_transaction_url = 'https://comercios.wompi.co/transactions/%s';
+
+        return parent::get_transaction_url( $order );
+    }
+
+    /**
      * Process the payment (after place order)
      */
     public function process_payment( $order_id ) {

@@ -65,9 +65,16 @@ class WC_Wompi_Order_Statuses {
      * Check allowing to change order to Voided status
      */
     public function check_voided_access( $order, $status ) {
-        if ( $status != 'completed' ) {
+
+        if ( $status != 'completed') {
             return false;
         }
+
+        $order_id = method_exists( $order, 'get_id' ) ? $order->get_id() : $order->id;
+        if ( get_post_meta( $order_id, '_payment_method_type', true ) != WC_Wompi_API::PAYMENT_TYPE_CARD ) {
+            return false;
+        }
+
         $time_diff = current_time('timestamp') - $order->get_date_completed()->getOffsetTimestamp();
         if ( $time_diff > self::VOIDED_EXPIRY ) {
             return false;

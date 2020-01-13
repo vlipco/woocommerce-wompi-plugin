@@ -79,13 +79,17 @@ class WC_Wompi_Webhook_Handler {
             WC_Wompi_Logger::log( 'Order Not Found' . ' TRANSACTION ID: ' . $transaction->id );
             return false;
         }
+
+        $order_id = method_exists( $order, 'get_id' ) ? $order->get_id() : $order->id;
+
         if ( $order->get_payment_method() != 'wompi' ) {
-            WC_Wompi_Logger::log( 'Payment method incorrect' . ' TRANSACTION ID: ' . $transaction->id . ' ORDER ID: ' . $order->get_id() . ' PAYMENT METHOD: ' . $order->get_payment_method() );
+            WC_Wompi_Logger::log( 'Payment method incorrect' . ' TRANSACTION ID: ' . $transaction->id . ' ORDER ID: ' . $order_id . ' PAYMENT METHOD: ' . $order->get_payment_method() );
             return false;
         }
+
         $amount = WC_Wompi_Helper::get_amount_in_cents( $order->get_total() );
         if ( $transaction->amount_in_cents != $amount ) {
-            WC_Wompi_Logger::log( 'Amount incorrect' . ' TRANSACTION ID: ' . $transaction->id . ' ORDER ID: ' . $order->get_id() . ' AMOUNT: ' . $amount );
+            WC_Wompi_Logger::log( 'Amount incorrect' . ' TRANSACTION ID: ' . $transaction->id . ' ORDER ID: ' . $order_id . ' AMOUNT: ' . $amount );
             return false;
         }
 
@@ -117,11 +121,15 @@ class WC_Wompi_Webhook_Handler {
      * Update order data
      */
     public function update_order_data( $order, $transaction ) {
-        $order_id = $order->get_id();
+
+        $order_id = method_exists( $order, 'get_id' ) ? $order->get_id() : $order->id;
+
         // Check if order data was set
         if ( ! $order->get_transaction_id() ) {
             // Set transaction id
             update_post_meta( $order_id, '_transaction_id', $transaction->id );
+            // Set payment method type
+            update_post_meta( $order_id, '_payment_method_type', $transaction->payment_method_type );
             // Set customer email
             update_post_meta( $order_id, '_billing_email', $transaction->customer_email );
             update_post_meta( $order_id, '_billing_address_index', $transaction->customer_email );

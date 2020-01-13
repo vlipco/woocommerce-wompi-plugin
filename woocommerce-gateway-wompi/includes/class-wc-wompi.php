@@ -66,6 +66,7 @@ class WC_Wompi {
             add_action( 'woocommerce_before_checkout_billing_form', array( 'WC_Gateway_Wompi_Custom', 'before_checkout_billing_form' ) );
             add_action( 'woocommerce_after_checkout_validation', array( 'WC_Gateway_Wompi_Custom', 'checkout_validation' ), 10, 2 );
             add_action( 'woocommerce_thankyou_order_received_text', array( 'WC_Gateway_Wompi_Custom', 'thankyou_order_received_text' ) );
+            add_action( 'woocommerce_admin_order_data_after_order_details', array( 'WC_Gateway_Wompi_Custom', 'admin_order_data_after_order_details' ) );
 
             add_filter( 'woocommerce_billing_fields', array( 'WC_Gateway_Wompi_Custom', 'billing_fields' ) );
             add_filter( 'woocommerce_thankyou_order_key', array( 'WC_Gateway_Wompi_Custom', 'thankyou_order_key' ) );

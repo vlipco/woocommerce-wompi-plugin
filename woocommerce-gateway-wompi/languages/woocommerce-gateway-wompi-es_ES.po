@@ -186,3 +186,8 @@ msgstr "Apoyo"
 #, php-format
 msgid "WooCommerce Wompi Gateway requires WooCommerce to be installed and active. You can download %s here."
 msgstr "WooCommerce Wompi Gateway requiere que WooCommerce esté instalado y activo. Puedes descargar %s aquí."
+
+#: includes/class-wc-gateway-wompi-custom.php:123
+#, php-format
+msgid "Payment method type"
+msgstr "Tipo de método de pago"

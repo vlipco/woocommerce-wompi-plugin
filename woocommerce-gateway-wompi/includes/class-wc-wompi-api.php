@@ -15,6 +15,7 @@ class WC_Wompi_API {
     const STATUS_APPROVED = 'APPROVED';
     const STATUS_DECLINED = 'DECLINED';
     const STATUS_VOIDED = 'VOIDED';
+    const PAYMENT_TYPE_CARD = 'CARD';
 
     /**
      * The single instance of the class
@@ -102,13 +103,19 @@ class WC_Wompi_API {
 		WC_Wompi_Logger::log( 'REQUEST URL: ' . $this->endpoint . $request . ' REQUEST DATA: ' . print_r( $data, true ) );
 
         $headers = $this->get_headers( $use_secret );
-        WC_Wompi_Logger::log( 'REQUEST HEADERS: ' . print_r( $headers, true ) );
 
 		$params = array(
             'method'  => $method,
             'headers' => $headers,
             'body'    => $data,
         );
+
+        // Exclude private key from logs
+        if ( 'yes' === WC_Wompi::$settings['logging'] ) {
+            $strlen = strlen( $this->private_key );
+            $headers['Authorization'] = 'Bearer ' . ( ! empty( $strlen ) ? str_repeat( 'X', $strlen ) : '' );
+            WC_Wompi_Logger::log( 'REQUEST HEADERS: ' . print_r( $headers, true ) );
+        }
 
 		$response = wp_safe_remote_post( $this->endpoint . $request, $params );
         WC_Wompi_Logger::log( 'REQUEST RESPONSE: ' . print_r( $response, true ) );
