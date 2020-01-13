@@ -10,7 +10,8 @@
 			"currency":"COP",
 			"payment_method_type":"CARD",
 			"payment_method":{
-				"type":"CARD","extra":{
+				"type":"CARD",
+				"extra":{
 					"bin":"424242",
 					"name":"VISA-4242",
 					"brand":"VISA",
@@ -19,7 +20,7 @@
 					"last_four":"4242",
 					"external_identifier":"0vzOwDPzYo"
 				},
-				"token":"tok_test_1128_da0d027104de2c293e8506b77C0cDac3",
+				"token":"",
 				"installments":1
 			},
 			"status":"APPROVED",
