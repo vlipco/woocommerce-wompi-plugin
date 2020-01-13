@@ -44,7 +44,9 @@ class WC_Wompi_Order_Statuses {
             $add_status = true;
         } else {
             global $pagenow, $post;
-            if ( $pagenow == 'post.php' && is_object($post) && $post->post_type == 'shop_order' ) {
+            if ( $pagenow == 'edit.php' && $_GET['post_type'] == 'shop_order' ) {
+                $add_status = true;
+            } elseif ( $pagenow == 'post.php' && is_object( $post ) && $post->post_type == 'shop_order' ) {
                 $order = new WC_Order( $post->ID );
                 $status = $order->get_status();
                 if ( $status == 'voided' || self::check_voided_access( $order, $status ) ) {
@@ -78,19 +80,38 @@ class WC_Wompi_Order_Statuses {
      * On order update
      */
     public function process_shop_order_meta( $order_id ) {
+
+        // Change order status to Voided
         if ( $_POST['order_status'] == 'wc-voided' ) {
             $order = new WC_Order( $order_id );
             $status = $order->get_status();
 
             if ( $status != 'completed' ||
                 ! self::check_voided_access( $order, $status ) ||
-                ! WC_Wompi_API::instance()->transaction_void( $order->get_transaction_id() )
+                ! $this->order_void( $order )
             ) {
                 $order->add_order_note( __( 'Unable to change status to Voided.', 'woocommerce-gateway-wompi' ) );
                 WC_Wompi_Logger::log( 'Unable to change status to Voided.' );
                 $_POST['order_status'] = 'wc-' . $status;
             }
         }
+    }
+
+    /**
+     * On order void
+     */
+    public function order_void( $order ) {
+
+        // API Void
+        if ( WC_Wompi_API::instance()->transaction_void( $order->get_transaction_id() ) ) {
+
+            // Gateway process
+            WC_Gateway_Wompi::process_void( $order );
+
+            return true;
+        }
+
+        return false;
     }
 }
 

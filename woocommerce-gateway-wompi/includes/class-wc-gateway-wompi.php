@@ -7,7 +7,7 @@ defined( 'ABSPATH' ) || exit;
 class WC_Gateway_Wompi extends WC_Gateway_Wompi_Custom {
 
     /**
-     * Constructor.
+     * Constructor
      */
     public function __construct() {
         $this->id = 'wompi';
@@ -29,22 +29,23 @@ class WC_Gateway_Wompi extends WC_Gateway_Wompi_Custom {
 
         // Hooks
         add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
-        if ( $this->enabled == 'yes' ) {
+        if ( 'yes' === $this->enabled ) {
             $this->init_hooks();
         }
     }
 
     /**
-     * Checks to see if all criteria is met before showing payment method.
+     * Checks to see if all criteria is met before showing payment method
      */
     public function is_available() {
-        if ( ! in_array( get_woocommerce_currency(), $this->get_supported_currency() ) ) {
-            return false;
-        }
-        if ( $this->enabled == 'yes' ) {
-            if ( ! $this->private_key || ! $this->public_key ) {
+        if ( 'yes' === $this->enabled ) {
+            if ( ! $this->private_key ||
+                 ! $this->public_key ||
+                 ! in_array( get_woocommerce_currency(), $this->get_supported_currency() )
+            ) {
                 return false;
             }
+
             return true;
         }
 
@@ -78,5 +79,14 @@ class WC_Gateway_Wompi extends WC_Gateway_Wompi_Custom {
             'result' => 'success',
             'redirect' => add_query_arg( 'order_pay', $order_id, $checkout_payment_url )
         );
+    }
+
+    /**
+     * Process the payment to void
+     */
+    public static function process_void( $order ) {
+
+        // Restore stock
+        wc_maybe_increase_stock_levels( $order );
     }
 }

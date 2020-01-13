@@ -57,31 +57,34 @@ class WC_Wompi_Admin_Notices {
 
 		if ( isset( $options['enabled'] ) && 'yes' === $options['enabled'] ) {
 
-            $keys_added = true;
+            $keys_valid = true;
+
+            $gateway = new WC_Gateway_Wompi();
+            $supported_currency = $gateway->get_supported_currency();
+            $setting_link = $this->get_setting_link();
 
             // Check if keys are entered properly per live/test mode.
             if ( $testmode ) {
                 if (
                     empty( $test_pub_key ) ||
-                    empty( $test_secret_key ) ) {
-                    $setting_link = $this->get_setting_link();
+                    empty( $test_secret_key ) ||
+                    empty( $supported_currency ) ) {
                     $this->add_admin_notice( 'keys', 'notice notice-error', sprintf( __( 'Wompi is in test mode however your test keys may not be valid. Please go to your settings and, <a href="%s">set your Wompi account keys</a>.', 'woocommerce-gateway-wompi' ), $setting_link ) );
-                    $keys_added = false;
+                    $keys_valid = false;
                 }
             } else {
                 if (
                     empty( $live_pub_key ) ||
-                    empty( $live_secret_key ) ) {
-                    $setting_link = $this->get_setting_link();
+                    empty( $live_secret_key ) ||
+                    empty( $supported_currency ) ) {
                     $this->add_admin_notice( 'keys', 'notice notice-error', sprintf( __( 'Wompi is in live mode however your live keys may not be valid. Please go to your settings and, <a href="%s">set your Wompi account keys</a>.', 'woocommerce-gateway-wompi' ), $setting_link ) );
-                    $keys_added = false;
+                    $keys_valid = false;
                 }
             }
 
-            // Supported currency notice
-            if ( $keys_added ) {
-                $gateway = new WC_Gateway_Wompi();
-                $supported_currency = $gateway->get_supported_currency();
+            if ( $keys_valid ) {
+
+                // Supported currency notice
                 if ( ! in_array( get_woocommerce_currency(), $supported_currency ) ) {
                     $this->add_admin_notice( $gateway->method_title, 'notice notice-error', sprintf( __( '%1$s is enabled - it requires store currency to be set to %2$s', 'woocommerce-gateway-wompi' ), 'WC_Gateway_Wompi', implode( ', ', $supported_currency ) ) );
                 }

@@ -10,9 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.2.4\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
-"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -21,30 +19,18 @@ msgstr ""
 
 #: includes/admin/class-wc-wompi-admin-notices.php:73
 #, php-format
-msgid ""
-"Wompi is in test mode however your test keys may not be valid. Please go to "
-"your settings and, <a href=\"%s\">set your Wompi account keys</a>."
-msgstr ""
-"Wompi está en modo de prueba, sin embargo, es posible que las claves de "
-"prueba no sean válidas. Por favor, vaya a la configuración y, establezca sus "
-"claves de <a href=\"%s\">cuenta Wompi</a>."
+msgid "Wompi is in test mode however your test keys may not be valid. Please go to your settings and, <a href=\"%s\">set your Wompi account keys</a>."
+msgstr "Wompi está en modo de prueba, sin embargo, es posible que las claves de prueba no sean válidas. Por favor, vaya a la configuración y, establezca sus claves de <a href=\"%s\">cuenta Wompi</a>."
 
 #: includes/admin/class-wc-wompi-admin-notices.php:80
 #, php-format
-msgid ""
-"Wompi is in live mode however your live keys may not be valid. Please go to "
-"your settings and, <a href=\"%s\">set your Wompi account keys</a>."
-msgstr ""
-"Wompi está en modo en vivo, sin embargo, sus teclas en vivo pueden no ser "
-"válidas. Por favor, vaya a la configuración y, establezca sus claves de <a "
-"href=\"%s\">cuenta Wompi</a>."
+msgid "Wompi is in live mode however your live keys may not be valid. Please go to your settings and, <a href=\"%s\">set your Wompi account keys</a>."
+msgstr "Wompi está en modo en vivo, sin embargo, sus teclas en vivo pueden no ser válidas. Por favor, vaya a la configuración y, establezca sus claves de <a href=\"%s\">cuenta Wompi</a>."
 
 #: includes/admin/class-wc-wompi-admin-notices.php:88
 #, php-format
 msgid "%1$s is enabled - it requires store currency to be set to %2$s"
-msgstr ""
-"%1$s está habilitado- requiere que la moneda de la tienda se establezca en "
-"%2$s"
+msgstr "%1$s está habilitado- requiere que la moneda de la tienda se establezca en %2$s"
 
 #: includes/admin/wompi-settings.php:8
 msgid "Enable/Disable"
@@ -80,15 +66,8 @@ msgstr "Puntos finales de Webhook"
 
 #: includes/admin/wompi-settings.php:31
 #, php-format
-msgid ""
-"You must add the following webhook endpoint <strong class=\"wc_wompi-webhook-"
-"link\">&nbsp;%s&nbsp;</strong> to your <a href=\"https://comercios.wompi.co/"
-"my-account\" target=\"_blank\">Wompi account settings</a>."
-msgstr ""
-"Debe agregar el siguiente punto final de webhook <strong class=\"wc_wompi-"
-"webhook-link\">&nbsp;%s&nbsp;</strong> a la <a href=\"https://comercios."
-"wompi.co/my-account\" target=\"_blank\">configuración de su cuenta de Wompi</"
-"a>."
+msgid "You must add the following webhook endpoint <strong class=\"wc_wompi-webhook-link\">&nbsp;%s&nbsp;</strong> to your <a href=\"https://comercios.wompi.co/my-account\" target=\"_blank\">Wompi account settings</a>."
+msgstr "Debe agregar el siguiente punto final de webhook <strong class=\"wc_wompi-webhook-link\">&nbsp;%s&nbsp;</strong> a la <a href=\"https://comercios.wompi.co/my-account\" target=\"_blank\">configuración de su cuenta de Wompi</a>."
 
 #: includes/admin/wompi-settings.php:34
 msgid "Test mode"
@@ -100,9 +79,7 @@ msgstr "Habilitar modo de prueba"
 
 #: includes/admin/wompi-settings.php:37
 msgid "Place the payment gateway in test mode using test API keys."
-msgstr ""
-"Coloque la pasarela de pago en modo de prueba con las claves de API de "
-"prueba."
+msgstr "Coloque la pasarela de pago en modo de prueba con las claves de API de prueba."
 
 #: includes/admin/wompi-settings.php:42
 msgid "Test Public Key"
@@ -135,9 +112,7 @@ msgstr "Registrar mensajes de depuración"
 
 #: includes/admin/wompi-settings.php:73
 msgid "Save debug messages to the WooCommerce System Status log."
-msgstr ""
-"Guarde los mensajes de depuración en el registro de estado del sistema "
-"WooCommerce."
+msgstr "Guarde los mensajes de depuración en el registro de estado del sistema WooCommerce."
 
 #: includes/class-wc-gateway-wompi-custom.php:67
 msgid "Billing details will need to be entered in the Wompi widget"
@@ -145,31 +120,18 @@ msgstr "Los detalles de facturación deberán ingresarse en el widget de Wompi"
 
 #: includes/class-wc-gateway-wompi-custom.php:91
 #, php-format
-msgid ""
-"This order changed to status &ldquo;%s&rdquo;. Please contact us if you need "
-"assistance."
-msgstr ""
-"Esta orden cambió a estado &ldquo;%s&rdquo;. Por favor, póngase en contacto "
-"con nosotros si necesita ayuda."
+msgid "This order changed to status &ldquo;%s&rdquo;. Please contact us if you need assistance."
+msgstr "Esta orden cambió a estado &ldquo;%s&rdquo;. Por favor, póngase en contacto con nosotros si necesita ayuda."
 
 #: includes/class-wc-gateway-wompi-custom.php:103
 #, php-format
-msgid ""
-"Sorry, the minimum allowed order total is %1$s to use this payment method."
-msgstr ""
-"Lo sentimos, el total mínimo de pedido permitido  %1$s es utilizar este "
-"método de pago."
+msgid "Sorry, the minimum allowed order total is %1$s to use this payment method."
+msgstr "Lo sentimos, el total mínimo de pedido permitido  %1$s es utilizar este método de pago."
 
 #: includes/class-wc-gateway-wompi.php:15
 #, php-format
-msgid ""
-"Wompi works via Widget Checkout. <a href=\"%1$s\" target=\"_blank\">Sign up</"
-"a> for a Wompi account, and <a href=\"%2$s\" target=\"_blank\">get your "
-"Wompi account keys</a>."
-msgstr ""
-"Wompi funciona a través de Widget Checkout. <a href=\"%1$s\" target=\"_blank"
-"\">Regístrese</a> para obtener una cuenta de Wompi y <a href=\"%2$s\" target="
-"\"_blank\"> obtenga las claves de su cuenta de Wompi</a>."
+msgid "Wompi works via Widget Checkout. <a href=\"%1$s\" target=\"_blank\">Sign up</a> for a Wompi account, and <a href=\"%2$s\" target=\"_blank\">get your Wompi account keys</a>."
+msgstr "Wompi funciona a través de Widget Checkout. <a href=\"%1$s\" target=\"_blank\">Regístrese</a> para obtener una cuenta de Wompi y <a href=\"%2$s\" target=\"_blank\"> obtenga las claves de su cuenta de Wompi</a>."
 
 #: includes/class-wc-wompi-order-statuses.php:28
 #: includes/class-wc-wompi-order-statuses.php:56
@@ -222,9 +184,5 @@ msgstr "Apoyo"
 
 #: woocommerce-gateway-wompi.php:25
 #, php-format
-msgid ""
-"WooCommerce Wompi Gateway requires WooCommerce to be installed and active. "
-"You can download %s here."
-msgstr ""
-"WooCommerce Wompi Gateway requiere que WooCommerce esté instalado y activo. "
-"Puedes descargar %s aquí."
+msgid "WooCommerce Wompi Gateway requires WooCommerce to be installed and active. You can download %s here."
+msgstr "WooCommerce Wompi Gateway requiere que WooCommerce esté instalado y activo. Puedes descargar %s aquí."

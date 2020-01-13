@@ -40,7 +40,7 @@ class WC_Gateway_Wompi_Custom extends WC_Payment_Gateway {
             <script
                 src="https://checkout.wompi.co/widget.js"
                 data-render="button"
-                data-public-key="'.( $this->get_option( 'testmode' ) ? $this->get_option( 'test_public_key' ) : $this->get_option( 'public_key' ) ).'"
+                data-public-key="'.( $this->get_option( 'testmode' ) === 'yes' ? $this->get_option( 'test_public_key' ) : $this->get_option( 'public_key' ) ).'"
                 data-currency="'.get_woocommerce_currency().'"
                 data-amount-in-cents="'.WC_Wompi_Helper::get_amount_in_cents( $order->get_total() ).'"
                 data-reference="'.$order_id.'"

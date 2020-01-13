@@ -7,10 +7,14 @@ defined( 'ABSPATH' ) || exit;
 class WC_Wompi_API {
 
     /**
-     * Define API endpoints
+     * Define API constants
      */
-    const API_ENDPOINT = 'https://production.wompi.co/v1';
-    const API_ENDPOINT_TEST = 'https://sandbox.wompi.co/v1';
+    const ENDPOINT = 'https://production.wompi.co/v1';
+    const ENDPOINT_TEST = 'https://sandbox.wompi.co/v1';
+    const EVENT_TRANSACTION_UPDATED = 'transaction.updated';
+    const STATUS_APPROVED = 'APPROVED';
+    const STATUS_DECLINED = 'DECLINED';
+    const STATUS_VOIDED = 'VOIDED';
 
     /**
      * The single instance of the class
@@ -56,11 +60,11 @@ class WC_Wompi_API {
         $options = WC_Wompi::$settings;
 
         if ( 'yes' === $options['testmode'] ) {
-            $this->endpoint = self::API_ENDPOINT_TEST;
+            $this->endpoint = self::ENDPOINT_TEST;
             $this->public_key = $options['test_public_key'];
             $this->private_key = $options['test_private_key'];
         } else {
-            $this->endpoint = self::API_ENDPOINT;
+            $this->endpoint = self::ENDPOINT;
             $this->public_key = $options['public_key'];
             $this->private_key = $options['private_key'];
         }
@@ -73,7 +77,7 @@ class WC_Wompi_API {
      * Getter
      */
     public function __get( $name ) {
-        if ( property_exists($this, $name) ) {
+        if ( property_exists( $this, $name ) ) {
             return $this->$name;
         }
     }
@@ -81,45 +85,47 @@ class WC_Wompi_API {
 	/**
 	 * Generates the headers to pass to API request
 	 */
-    private function get_headers() {
-		return array(
-            'Authorization' => 'Bearer ' . $this->private_key,
-        );
+    private function get_headers( $use_secret ) {
+        $headers = array();
+
+        if ( $use_secret ) {
+            $headers['Authorization'] = 'Bearer ' . $this->private_key;
+        }
+
+		return $headers;
 	}
 
 	/**
 	 * Send the request to Wompi's API
 	 */
-	public function request( $method, $request, $data = null, $use_headers = false ) {
-		WC_Wompi_Logger::log( 'Request: ' . $this->endpoint . $request . ' Request data: ' . print_r( $data, true ) );
+	public function request( $method, $request, $data = null, $use_secret = false ) {
+		WC_Wompi_Logger::log( 'REQUEST URL: ' . $this->endpoint . $request . ' REQUEST DATA: ' . print_r( $data, true ) );
+
+        $headers = $this->get_headers( $use_secret );
+        WC_Wompi_Logger::log( 'REQUEST HEADERS: ' . print_r( $headers, true ) );
 
 		$params = array(
             'method'  => $method,
+            'headers' => $headers,
             'body'    => $data,
         );
 
-		if ( $use_headers ) {
-            $headers         = $this->get_headers();
-            $params['headers'] = $headers;
-            WC_Wompi_Logger::log( 'Headers: ' . print_r( $headers, true ) );
-        }
-
 		$response = wp_safe_remote_post( $this->endpoint . $request, $params );
+        WC_Wompi_Logger::log( 'REQUEST RESPONSE: ' . print_r( $response, true ) );
 
-		if ( is_wp_error( $response ) || empty( $response['body'] ) ) {
-			WC_Wompi_Logger::log( 'ERROR Response: ' . print_r( $response, true ) );
-
+		if ( is_wp_error( $response ) ) {
 			return false;
 		}
 
-		return json_decode( $response['body'] );
+        return json_decode( $response['body'] );
 	}
 
     /**
      * Transaction void
      */
 	public function transaction_void( $transaction_id ) {
-        return $this->request( 'POST', '/transactions/' . $transaction_id . '/void', null, true );
+        $response = $this->request( 'POST', '/transactions/' . $transaction_id . '/void', null, true );
+        return $response->data->transaction->status == self::STATUS_APPROVED ? true : false;
     }
 
     /**

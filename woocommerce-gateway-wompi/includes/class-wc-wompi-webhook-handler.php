@@ -38,7 +38,7 @@ class WC_Wompi_Webhook_Handler {
 	public function process_webhook( $response ) {
         // Check transaction event
 		switch ( $response->event ) {
-			case 'transaction.updated':
+            case WC_Wompi_API::EVENT_TRANSACTION_UPDATED:
 				$this->process_webhook_payment( $response );
 				break;
             default :
@@ -96,15 +96,16 @@ class WC_Wompi_Webhook_Handler {
      * Apply transaction status
      */
     public function apply_status( $order, $transaction ) {
-        switch( $transaction->status ) {
-            case 'APPROVED' :
+        switch ( $transaction->status ) {
+            case WC_Wompi_API::STATUS_APPROVED:
                 $order->payment_complete( $transaction->id );
                 $this->update_transaction_status( $order, __('Wompi payment APPROVED. TRANSACTION ID: ', 'woocommerce-gateway-wompi') . ' (' . $transaction->id . ')', 'completed' );
                 break;
-            case 'VOIDED' :
+            case WC_Wompi_API::STATUS_VOIDED:
+                WC_Gateway_Wompi::process_void( $order );
                 $this->update_transaction_status( $order, __('Wompi payment VOIDED. TRANSACTION ID: ', 'woocommerce-gateway-wompi') . ' (' . $transaction->id . ')', 'voided' );
                 break;
-            case 'DECLINED' :
+            case WC_Wompi_API::STATUS_DECLINED:
                 $this->update_transaction_status( $order, __('Wompi payment DECLINED. TRANSACTION ID: ', 'woocommerce-gateway-wompi') . ' (' . $transaction->id . ')', 'cancelled' );
                 break;
             default : // ERROR
@@ -116,20 +117,20 @@ class WC_Wompi_Webhook_Handler {
      * Update order data
      */
     public function update_order_data( $order, $transaction ) {
+        $order_id = $order->get_id();
         // Check if order data was set
         if ( ! $order->get_transaction_id() ) {
             // Set transaction id
-            $order->update_meta_data( '_transaction_id', $transaction->id );
+            update_post_meta( $order_id, '_transaction_id', $transaction->id );
             // Set customer email
-            $order->update_meta_data( '_billing_email', $transaction->customer_email );
-            // Parse full name
-            $full_name = WC_Wompi_Helper::split_fullname( $transaction->customer_data->full_name );
+            update_post_meta( $order_id, '_billing_email', $transaction->customer_email );
+            update_post_meta( $order_id, '_billing_address_index', $transaction->customer_email );
             // Set first name
-            $order->update_meta_data( '_billing_first_name', $full_name[0] );
+            update_post_meta( $order_id, '_billing_first_name', $transaction->customer_data->full_name );
             // Set last name
-            $order->update_meta_data( '_billing_last_name', $full_name[1] );
+            update_post_meta( $order_id, '_billing_last_name', '' );
             // Set phone number
-            $order->update_meta_data( '_billing_phone', $transaction->customer_data->phone_number );
+            update_post_meta( $order_id, '_billing_phone', $transaction->customer_data->phone_number );
         }
     }
 
