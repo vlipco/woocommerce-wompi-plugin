@@ -129,7 +129,7 @@ class WC_Wompi_Webhook_Handler {
             // Set transaction id
             update_post_meta( $order_id, '_transaction_id', $transaction->id );
             // Set payment method type
-            update_post_meta( $order_id, '_payment_method_type', $transaction->payment_method_type );
+            update_post_meta( $order_id, WC_Wompi::FIELD_PAYMENT_METHOD_TYPE, $transaction->payment_method_type );
             // Set customer email
             update_post_meta( $order_id, '_billing_email', $transaction->customer_email );
             update_post_meta( $order_id, '_billing_address_index', $transaction->customer_email );

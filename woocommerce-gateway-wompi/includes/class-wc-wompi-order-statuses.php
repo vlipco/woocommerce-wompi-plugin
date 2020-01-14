@@ -71,7 +71,7 @@ class WC_Wompi_Order_Statuses {
         }
 
         $order_id = method_exists( $order, 'get_id' ) ? $order->get_id() : $order->id;
-        if ( get_post_meta( $order_id, '_payment_method_type', true ) != WC_Wompi_API::PAYMENT_TYPE_CARD ) {
+        if ( get_post_meta( $order_id, WC_Wompi::FIELD_PAYMENT_METHOD_TYPE, true ) != WC_Wompi_API::PAYMENT_TYPE_CARD ) {
             return false;
         }
 

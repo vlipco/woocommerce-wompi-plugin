@@ -7,6 +7,11 @@ defined( 'ABSPATH' ) || exit;
 class WC_Wompi {
 
     /**
+     * Define WP constants
+     */
+    const FIELD_PAYMENT_METHOD_TYPE = '_wompi_payment_method_type';
+
+    /**
      * The single instance of the class
      */
     protected static $_instance = null;

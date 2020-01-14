@@ -120,6 +120,6 @@ class WC_Gateway_Wompi_Custom extends WC_Payment_Gateway {
      */
     public static function admin_order_data_after_order_details( $order ) {
         $order_id = method_exists( $order, 'get_id' ) ? $order->get_id() : $order->id;
-        echo '<p class="form-field form-field-wide wompi-payment-method-type"><strong>' . __( 'Payment method type', 'woocommerce-gateway-wompi' ) . ':</strong> ' . get_post_meta( $order_id, '_payment_method_type', true ) . '</p>';
+        echo '<p class="form-field form-field-wide wompi-payment-method-type"><strong>' . __( 'Payment method type', 'woocommerce-gateway-wompi' ) . ':</strong> ' . get_post_meta( $order_id, WC_Wompi::FIELD_PAYMENT_METHOD_TYPE, true ) . '</p>';
     }
 }
