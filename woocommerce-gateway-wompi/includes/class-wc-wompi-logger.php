@@ -15,8 +15,8 @@ class WC_Wompi_Logger {
 	/**
 	 * Utilize WC logger class
 	 */
-	public static function log( $message, $start_time = null, $end_time = null ) {
-		if ( ! class_exists( 'WC_Logger' ) ) {
+	public static function log( $message, $single = true, $start_time = null, $end_time = null ) {
+		if ( ! class_exists( 'WC_Logger' ) || ( isset( $_GET['page'] ) && isset( $_GET['tab'] ) && $_GET['page'] == 'wc-status' && $_GET['tab'] == 'logs' ) ) {
 			return;
 		}
 
@@ -46,7 +46,12 @@ class WC_Wompi_Logger {
 				$log_entry .= '====End Log ' . $formatted_end_time . ' (' . $elapsed_time . ')====' . "\n\n";
 
 			} else {
-				$log_entry = '====Start Log====' . "\n" . $message . "\n" . '====End Log====' . "\n\n";
+			    if( $single ) {
+                    $log_entry = '=================================Start Log====' . "\n" . $message . "\n" . '====End Log====' . "\n\n";
+                } else {
+                    $log_entry = $message;
+                }
+
 
 			}
 

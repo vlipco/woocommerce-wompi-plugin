@@ -13,6 +13,7 @@ class WC_Gateway_Wompi_Custom extends WC_Payment_Gateway {
     public $testmode;
     public $public_key;
     public $private_key;
+    public static $supported_currency = false;
 
     /**
      * Init hooks
@@ -24,8 +25,12 @@ class WC_Gateway_Wompi_Custom extends WC_Payment_Gateway {
     /**
      * Returns all supported currencies for this payment method
      */
-    public function get_supported_currency() {
-        return apply_filters( 'wc_wompi_supported_currencies', WC_Wompi_API::instance()->supported_currency );
+    public static function get_supported_currency() {
+        if ( self::$supported_currency === false ) {
+            self::$supported_currency = apply_filters( 'wc_wompi_supported_currencies', WC_Wompi_API::instance()->get_merchant_data('accepted_currencies') );
+        }
+
+        return self::$supported_currency;
     }
 
     /**
@@ -40,7 +45,7 @@ class WC_Gateway_Wompi_Custom extends WC_Payment_Gateway {
             <script
                 src="https://checkout.wompi.co/widget.js"
                 data-render="button"
-                data-public-key="'.( $this->get_option( 'testmode' ) === 'yes' ? $this->get_option( 'test_public_key' ) : $this->get_option( 'public_key' ) ).'"
+                data-public-key="'.( WC_Wompi::$settings['testmode'] === 'yes' ? WC_Wompi::$settings['test_public_key'] : WC_Wompi::$settings['public_key'] ).'"
                 data-currency="'.get_woocommerce_currency().'"
                 data-amount-in-cents="'.WC_Wompi_Helper::get_amount_in_cents( $order->get_total() ).'"
                 data-reference="'.$order_id.'"

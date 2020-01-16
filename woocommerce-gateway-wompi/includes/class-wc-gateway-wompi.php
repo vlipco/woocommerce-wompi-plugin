@@ -10,22 +10,25 @@ class WC_Gateway_Wompi extends WC_Gateway_Wompi_Custom {
      * Constructor
      */
     public function __construct() {
+
+        $options = WC_Wompi::$settings;
+
         $this->id = 'wompi';
         $this->method_title = 'WOMPI';
         $this->method_description = sprintf( __( 'Wompi works via Widget Checkout. <a href="%1$s" target="_blank">Sign up</a> for a Wompi account, and <a href="%2$s" target="_blank">get your Wompi account keys</a>.', 'woocommerce-gateway-wompi' ), 'https://comercios.wompi.co/', 'https://comercios.wompi.co/my-account' );
         $this->has_fields = false;
         $this->init_form_fields();
         $this->init_settings();
-        $this->enabled = $this->get_option( 'enabled' );
+        $this->enabled = $options['enabled'];
         $this->icon = WC_WOMPI_PLUGIN_URL . '/assets/img/wompi-logo.png';
-        $this->title = $this->get_option('title');
-        $this->description = $this->get_option('description');
-        $this->testmode = $this->get_option('testmode');
+        $this->title = $options['title'];
+        $this->description = $options['description'];
+        $this->testmode = $options['testmode'];
         $this->supports = array(
             'products'
         );
-        $this->public_key  = $this->testmode ? $this->get_option( 'test_public_key' ) : $this->get_option( 'public_key' );
-        $this->private_key = $this->testmode ? $this->get_option( 'test_private_key' ) : $this->get_option( 'private_key' );
+        $this->public_key  = $this->testmode ? $options['test_public_key'] : $options['public_key'];
+        $this->private_key = $this->testmode ? $options['test_private_key'] : $options['private_key'];
 
         // Hooks
         add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
@@ -41,7 +44,7 @@ class WC_Gateway_Wompi extends WC_Gateway_Wompi_Custom {
         if ( 'yes' === $this->enabled ) {
             if ( ! $this->private_key ||
                  ! $this->public_key ||
-                 ! in_array( get_woocommerce_currency(), $this->get_supported_currency() )
+                 ! in_array( get_woocommerce_currency(), self::get_supported_currency() )
             ) {
                 return false;
             }

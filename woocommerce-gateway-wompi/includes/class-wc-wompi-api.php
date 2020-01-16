@@ -38,11 +38,6 @@ class WC_Wompi_API {
 	private $private_key = '';
 
     /**
-     * Supported currency
-     */
-    private $supported_currency = array();
-
-    /**
      * Instance
      */
     public static function instance() {
@@ -69,9 +64,6 @@ class WC_Wompi_API {
             $this->public_key = $options['public_key'];
             $this->private_key = $options['private_key'];
         }
-
-        // Supported_currency
-        $this->supported_currency = $this->get_merchant_data('accepted_currencies');
     }
 
     /**
@@ -100,7 +92,10 @@ class WC_Wompi_API {
 	 * Send the request to Wompi's API
 	 */
 	public function request( $method, $request, $data = null, $use_secret = false ) {
-		WC_Wompi_Logger::log( 'REQUEST URL: ' . $this->endpoint . $request . ' REQUEST DATA: ' . print_r( $data, true ) );
+		WC_Wompi_Logger::log( "==== REQUEST ============================== Start Log ==== \n REQUEST URL: " . $method . ' ' . $this->endpoint . $request . "\n", false );
+		if ( ! is_null( $data ) ) {
+            WC_Wompi_Logger::log( 'REQUEST DATA: ' . print_r( $data, true ), false );
+        }
 
         $headers = $this->get_headers( $use_secret );
 
@@ -111,14 +106,14 @@ class WC_Wompi_API {
         );
 
         // Exclude private key from logs
-        if ( 'yes' === WC_Wompi::$settings['logging'] ) {
+        if ( 'yes' === WC_Wompi::$settings['logging'] && ! empty( $headers ) ) {
             $strlen = strlen( $this->private_key );
             $headers['Authorization'] = 'Bearer ' . ( ! empty( $strlen ) ? str_repeat( 'X', $strlen ) : '' );
-            WC_Wompi_Logger::log( 'REQUEST HEADERS: ' . print_r( $headers, true ) );
+            WC_Wompi_Logger::log( 'REQUEST HEADERS: ' . print_r( $headers, true ), false );
         }
 
 		$response = wp_safe_remote_post( $this->endpoint . $request, $params );
-        WC_Wompi_Logger::log( 'REQUEST RESPONSE: ' . print_r( $response, true ) );
+        WC_Wompi_Logger::log( 'REQUEST RESPONSE: ' . print_r( $response, true ), false );
 
 		if ( is_wp_error( $response ) ) {
 			return false;
