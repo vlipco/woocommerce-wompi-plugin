@@ -62,7 +62,7 @@ msgstr "Paga a través de Wompi."
 
 #: includes/admin/wompi-settings.php:29
 msgid "Webhook Endpoints"
-msgstr "Urls de eventos"
+msgstr "URL de eventos"
 
 #: includes/admin/wompi-settings.php:31
 #, php-format
@@ -137,7 +137,7 @@ msgstr "Wompi funciona a través de Widget Checkout. <a href=\"%1$s\" target=\"_
 #: includes/class-wc-wompi-order-statuses.php:56
 msgctxt "Order status"
 msgid "Voided"
-msgstr "Anulado"
+msgstr "Anulada"
 
 #: includes/class-wc-wompi-order-statuses.php:33
 #, php-format
@@ -152,23 +152,23 @@ msgstr "No se puede cambiar el estado a Anulado."
 
 #: includes/class-wc-wompi-webhook-handler.php:65
 msgid "Wompi payment validation is invalid. TRANSACTION ID: "
-msgstr "La validación de pago de Wompi no es válida. TRANSACTION ID: "
+msgstr "La validación de pago de Wompi no es válida. ID TRANSACCIÓN: "
 
 #: includes/class-wc-wompi-webhook-handler.php:102
 msgid "Wompi payment APPROVED. TRANSACTION ID: "
-msgstr "Pago a través de Wompi APROBADO. TRANSACTION ID: "
+msgstr "Pago a través de Wompi APROBADO. ID TRANSACCIÓN: "
 
 #: includes/class-wc-wompi-webhook-handler.php:105
 msgid "Wompi payment VOIDED. TRANSACTION ID: "
-msgstr "Pago a través de Wompi ANULADO. TRANSACTION ID: "
+msgstr "Pago a través de Wompi ANULADO. ID TRANSACCIÓN: "
 
 #: includes/class-wc-wompi-webhook-handler.php:108
 msgid "Wompi payment DECLINED. TRANSACTION ID: "
-msgstr "Pago a través de Wompi RECHAZADO. TRANSACTION ID: "
+msgstr "Pago a través de Wompi RECHAZADO. ID TRANSACCIÓN: "
 
 #: includes/class-wc-wompi-webhook-handler.php:111
 msgid "Wompi payment ERROR. TRANSACTION ID: "
-msgstr "ERROR en pago a través de Wompi. TRANSACTION ID: "
+msgstr "ERROR en pago a través de Wompi. ID TRANSACCIÓN: "
 
 #: includes/class-wc-wompi.php:80
 msgid "Settings"
@@ -185,7 +185,7 @@ msgstr "Soporte"
 #: woocommerce-gateway-wompi.php:25
 #, php-format
 msgid "WooCommerce Wompi Gateway requires WooCommerce to be installed and active. You can download %s here."
-msgstr "WooCommerce Wompi Gateway requiere que WooCommerce esté instalado y activo. Puedes descargarlo %s aquí."
+msgstr "El plugin para recibir pagos en Wompi requiere que WooCommerce esté instalado y activo. Puedes descargarlo %s aquí."
 
 #: includes/class-wc-gateway-wompi-custom.php:123
 #, php-format
