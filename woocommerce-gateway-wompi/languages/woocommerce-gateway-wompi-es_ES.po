@@ -46,7 +46,7 @@ msgstr "Título"
 
 #: includes/admin/wompi-settings.php:17
 msgid "This controls the title which the user sees during checkout."
-msgstr "Esto controla el título que el usuario ve durante el pago."
+msgstr "Título que tus clientes verán durante el pago."
 
 #: includes/admin/wompi-settings.php:22
 msgid "Description"
@@ -54,7 +54,7 @@ msgstr "Descripción"
 
 #: includes/admin/wompi-settings.php:24
 msgid "This controls the description which the user sees during checkout."
-msgstr "Esto controla la descripción que el usuario ve durante el pago."
+msgstr "Descripción que tus clientes verán durante el pago."
 
 #: includes/admin/wompi-settings.php:25
 msgid "Pay via Wompi gateway."
