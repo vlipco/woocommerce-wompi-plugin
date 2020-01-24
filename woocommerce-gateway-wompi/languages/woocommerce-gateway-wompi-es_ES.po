@@ -67,7 +67,7 @@ msgstr "URL de eventos"
 #: includes/admin/wompi-settings.php:31
 #, php-format
 msgid "You must add the following webhook endpoint <strong class=\"wc_wompi-webhook-link\">&nbsp;%s&nbsp;</strong> to your <a href=\"https://comercios.wompi.co/my-account\" target=\"_blank\">Wompi account settings</a>."
-msgstr "Debes agregar la siguiente url de evento <strong class=\"wc_wompi-webhook-link\">&nbsp;%s&nbsp;</strong> a la <a href=\"https://comercios.wompi.co/my-account\" target=\"_blank\">configuración de tu cuenta de Wompi</a>."
+msgstr "Debes agregar la siguiente url de eventos <strong class=\"wc_wompi-webhook-link\">&nbsp;%s&nbsp;</strong> a la <a href=\"https://comercios.wompi.co/my-account\" target=\"_blank\">configuración de tu cuenta de Wompi</a>."
 
 #: includes/admin/wompi-settings.php:34
 msgid "Test mode"
@@ -83,24 +83,24 @@ msgstr "Ejecuta la pasarela de pago en modo de prueba con las llaves de API de p
 
 #: includes/admin/wompi-settings.php:42
 msgid "Test Public Key"
-msgstr "Probar llave pública"
+msgstr "Llave pública de pruebas"
 
 #: includes/admin/wompi-settings.php:44 includes/admin/wompi-settings.php:51
 #: includes/admin/wompi-settings.php:58 includes/admin/wompi-settings.php:65
 msgid "Get your API keys from your Wompi account."
-msgstr "Obten tus llaves para el API desde tu cuenta de Wompi."
+msgstr "Obtén tus llaves para el API desde tu cuenta de Wompi."
 
 #: includes/admin/wompi-settings.php:49
 msgid "Test Private Key"
-msgstr "Probar llave privada"
+msgstr "Llave privada de pruebas"
 
 #: includes/admin/wompi-settings.php:56
 msgid "Live Public Key"
-msgstr "Llave pública en ambiente de producción"
+msgstr "Llave pública de producción"
 
 #: includes/admin/wompi-settings.php:63
 msgid "Live Private Key"
-msgstr "Llave privada en ambiente de producción"
+msgstr "Llave privada de producción"
 
 #: includes/admin/wompi-settings.php:70
 msgid "Logging"
@@ -112,7 +112,7 @@ msgstr "Registrar mensajes de depuración"
 
 #: includes/admin/wompi-settings.php:73
 msgid "Save debug messages to the WooCommerce System Status log."
-msgstr "Guardar los mensajes de depuración en la bitácora de estado del sistema WooCommerce."
+msgstr "Guardar los mensajes de depuración en el log de estado del sistema WooCommerce."
 
 #: includes/class-wc-gateway-wompi-custom.php:67
 msgid "Billing details will need to be entered in the Wompi widget"
@@ -131,7 +131,7 @@ msgstr "Lo sentimos, el total mínimo de pedido permitido es %1$s al usar este m
 #: includes/class-wc-gateway-wompi.php:15
 #, php-format
 msgid "Wompi works via Widget Checkout. <a href=\"%1$s\" target=\"_blank\">Sign up</a> for a Wompi account, and <a href=\"%2$s\" target=\"_blank\">get your Wompi account keys</a>."
-msgstr "Wompi funciona a través de Widget Checkout. <a href=\"%1$s\" target=\"_blank\">Regístrate</a> para crear una cuenta de Wompi y <a href=\"%2$s\" target=\"_blank\"> obten las llaves de tu cuenta</a>."
+msgstr "Wompi funciona a través de Widget Checkout. <a href=\"%1$s\" target=\"_blank\">Regístrate</a> para crear una cuenta de Wompi y <a href=\"%2$s\" target=\"_blank\"> obtén las llaves de tu cuenta</a>."
 
 #: includes/class-wc-wompi-order-statuses.php:28
 #: includes/class-wc-wompi-order-statuses.php:56
@@ -143,12 +143,12 @@ msgstr "Anulada"
 #, php-format
 msgid "Voided <span class=\"count\">(%s)</span>"
 msgid_plural "Voided <span class=\"count\">(%s)</span>"
-msgstr[0] "Anulado <span class=\"count\">(%s)</span>"
-msgstr[1] "Anulado <span class=\"count\">(%s)</span>"
+msgstr[0] "Anulada <span class=\"count\">(%s)</span>"
+msgstr[1] "Anuladas <span class=\"count\">(%s)</span>"
 
 #: includes/class-wc-wompi-order-statuses.php:89
 msgid "Unable to change status to Voided."
-msgstr "No se puede cambiar el estado a Anulado."
+msgstr "No se puede cambiar el estado a Anulada."
 
 #: includes/class-wc-wompi-webhook-handler.php:65
 msgid "Wompi payment validation is invalid. TRANSACTION ID: "
@@ -176,7 +176,7 @@ msgstr "Configuración"
 
 #: includes/class-wc-wompi.php:81
 msgid "Docs"
-msgstr "Docs"
+msgstr "Documentación"
 
 #: includes/class-wc-wompi.php:82
 msgid "Support"
