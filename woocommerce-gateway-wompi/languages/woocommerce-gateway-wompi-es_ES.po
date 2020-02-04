@@ -104,7 +104,7 @@ msgstr "Llave privada de producción"
 
 #: includes/admin/wompi-settings.php:70
 msgid "Logging"
-msgstr "Registro de eventos"
+msgstr "Registro de eventos (logs)"
 
 #: includes/admin/wompi-settings.php:71
 msgid "Log debug messages"
