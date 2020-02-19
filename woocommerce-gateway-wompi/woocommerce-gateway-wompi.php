@@ -1,10 +1,10 @@
 <?php
 /*
-Plugin Name: WooCommerce Wompi Gateway
+Plugin Name: Plugin WooCommerce de Wompi
 Plugin URI: https://docs.wompi.co/
-Description: Wompi Payment Gateway for WooCommerce.
-Version: 0.0.1
-Author: Wompi
+Description: Plugin WooCommerce para la pasarela de pagos Wompi.
+Version: 1.0.0
+Author: Vlipco SAS
 Author URI: https://wompi.co/
 Domain Path: /languages
 Text Domain: woocommerce-gateway-wompi
