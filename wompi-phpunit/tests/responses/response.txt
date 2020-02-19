@@ -1,0 +1,40 @@
+{
+"event":"transaction.updated",
+	"data":{
+		"transaction":{
+			"id":"11128-1578502783-84081",
+			"created_at":"2020-01-08T16:59:43.138Z",
+			"amount_in_cents":150000,
+			"reference":"12345",
+			"customer_email":"test@tst.tst",
+			"currency":"COP",
+			"payment_method_type":"CARD",
+			"payment_method":{
+				"type":"CARD",
+				"extra":{
+					"bin":"424242",
+					"name":"VISA-4242",
+					"brand":"VISA",
+					"exp_year":"20",
+					"exp_month":"10",
+					"last_four":"4242",
+					"external_identifier":"0vzOwDPzYo"
+				},
+				"token":"",
+				"installments":1
+			},
+			"status":"APPROVED",
+			"status_message":null,
+			"shipping_address":null,
+			"redirect_url":"",
+			"payment_source_id":null,
+			"payment_link_id":null,
+			"customer_data":{
+				"full_name":"Name Surname",
+				"phone_number":"+573007945529"
+			},
+			"bill_id":null
+		}
+	},
+	"sent_at":"2020-01-08T16:59:43Z"
+}
