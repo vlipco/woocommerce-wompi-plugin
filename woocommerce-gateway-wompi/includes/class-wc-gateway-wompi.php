@@ -41,18 +41,15 @@ class WC_Gateway_Wompi extends WC_Gateway_Wompi_Custom {
      * Checks to see if all criteria is met before showing payment method
      */
     public function is_available() {
-        if ( 'yes' === $this->enabled ) {
-            if ( ! $this->private_key ||
-                 ! $this->public_key ||
-                 ! in_array( get_woocommerce_currency(), self::get_supported_currency() )
-            ) {
-                return false;
-            }
+				if ( ! parent::is_available() ||
+						 ! $this->private_key ||
+						 ! $this->public_key ||
+						 ! in_array( get_woocommerce_currency(), self::get_supported_currency() )
+				) {
+						return false;
+				}
 
-            return true;
-        }
-
-        return parent::is_available();
+				return true;
     }
 
     /**
