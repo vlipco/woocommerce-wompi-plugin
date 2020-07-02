@@ -127,7 +127,7 @@ class WC_Wompi_API {
      */
 	public function transaction_void( $transaction_id ) {
         $response = $this->request( 'POST', '/transactions/' . $transaction_id . '/void', null, true );
-        return $response->data->transaction->status == self::STATUS_APPROVED ? true : false;
+        return $response->data->status == self::STATUS_APPROVED ? true : false;
     }
 
     /**
