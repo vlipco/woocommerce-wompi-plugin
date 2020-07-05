@@ -105,7 +105,7 @@ class WC_Gateway_Wompi_Custom extends WC_Payment_Gateway {
     public static function checkout_validation( $fields, $errors ){
         $amount = floatval( WC()->cart->total );
         if ( ! self::validate_minimum_order_amount( $amount ) ) {
-            $errors->add( 'validation', sprintf( __( 'Sorry, the minimum allowed order total is %1$s to use this payment method.', 'woocommerce-gateway-wompi' ), self::MINIMUM_ORDER_AMOUNT ) );
+            $errors->add( 'validation', sprintf( __( 'Sorry, the minimum allowed order total is %1$s to use this payment method.', 'woocommerce-gateway-wompi' ), wc_remove_number_precision( self::MINIMUM_ORDER_AMOUNT ) ) );
         }
     }
 
