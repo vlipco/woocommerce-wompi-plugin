@@ -1,4 +1,4 @@
-# Plugin WooCommerce para Wompi
+# Wompi Plugin WooCommerce
 Este repositorio implementa el plugin de WooCommerce (solución eCommerce de WordPress) para la pasarela de pagos **[Wompi](https://wompi.co)**.
 
 
@@ -26,6 +26,8 @@ Cada par de llaves (pública y privada) son similares a las mostradas a continua
 - Ejemplo de llave privada de producción: `prv_prod_ZB94WZJEirKDDYicSDSew56MsCIG5ZXz`
 
 Una vez hecho esto, **marca o desmarca** la opción de `Habilitar modo de prueba` para decidir si quieres hacer transacciones de prueba (_Sandbox_), o con dinero real (_Producción_), respectivamente.
+
+**IMPORTANTE:** Recuerda configurar la URL de eventos **en cada ambiente**, tanto en ambiente de Producción, como en ambiente de Sandbox de Wompi. Esta URL se provee en la vista de configuración del plugin.
 
 
 ## Licencia
