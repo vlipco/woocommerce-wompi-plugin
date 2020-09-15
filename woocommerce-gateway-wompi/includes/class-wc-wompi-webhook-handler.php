@@ -103,7 +103,7 @@ class WC_Wompi_Webhook_Handler {
         switch ( $transaction->status ) {
             case WC_Wompi_API::STATUS_APPROVED:
                 $order->payment_complete( $transaction->id );
-                $this->update_transaction_status( $order, __('Wompi payment APPROVED. TRANSACTION ID: ', 'woocommerce-gateway-wompi') . ' (' . $transaction->id . ')', false );
+                $this->update_transaction_status( $order, __('Wompi payment APPROVED. TRANSACTION ID: ', 'woocommerce-gateway-wompi') . ' (' . $transaction->id . ')', 'processing' );
                 break;
             case WC_Wompi_API::STATUS_VOIDED:
                 WC_Gateway_Wompi::process_void( $order );
