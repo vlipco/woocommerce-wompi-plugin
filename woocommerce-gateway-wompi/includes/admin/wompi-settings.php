@@ -28,7 +28,7 @@ return apply_filters(
 		'webhook' => array(
 			'title'       => __( 'Webhook Endpoints', 'woocommerce-gateway-wompi' ),
 			'type'        => 'title',
-			'description' => sprintf( __( 'You must add the following webhook endpoint <strong class="wc_wompi-webhook-link">&nbsp;%s&nbsp;</strong> to your <a href="https://comercios.wompi.co/my-account" target="_blank">Wompi account settings</a>.', 'woocommerce-gateway-wompi' ), add_query_arg( 'wc-api', 'wc_wompi', trailingslashit( get_home_url() ) ) ),
+			'description' => sprintf( __( 'You must add the following webhook endpoint <strong class="wc_wompi-webhook-link">&nbsp;%s&nbsp;</strong> to your <a href="https://comercios.wompi.co/my-account" target="_blank">Wompi account settings</a> for both Production and Sandbox environments.', 'woocommerce-gateway-wompi' ), add_query_arg( 'wc-api', 'wc_wompi', trailingslashit( get_home_url() ) ) ),
 		),
 		'testmode' => array(
 			'title'       => __( 'Test mode', 'woocommerce-gateway-wompi' ),

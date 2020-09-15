@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Plugin WooCommerce de Wompi 1.0.0\n"
+"Project-Id-Version: Wompi Plugin WooCommerce 1.0.1\n"
 "POT-Creation-Date: 2020-01-10 21:00+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
@@ -66,8 +66,8 @@ msgstr "URL de eventos"
 
 #: includes/admin/wompi-settings.php:31
 #, php-format
-msgid "You must add the following webhook endpoint <strong class=\"wc_wompi-webhook-link\">&nbsp;%s&nbsp;</strong> to your <a href=\"https://comercios.wompi.co/my-account\" target=\"_blank\">Wompi account settings</a>."
-msgstr "Debes agregar la siguiente url de eventos <strong class=\"wc_wompi-webhook-link\">&nbsp;%s&nbsp;</strong> a la <a href=\"https://comercios.wompi.co/my-account\" target=\"_blank\">configuración de tu cuenta de Wompi</a>."
+msgid "You must add the following webhook endpoint <strong class=\"wc_wompi-webhook-link\">&nbsp;%s&nbsp;</strong> to your <a href=\"https://comercios.wompi.co/my-account\" target=\"_blank\">Wompi account settings</a> for both Production and Sandbox environments."
+msgstr "Debes agregar la siguiente URL de eventos <strong class=\"wc_wompi-webhook-link\">&nbsp;%s&nbsp;</strong> a la <a href=\"https://comercios.wompi.co/my-account\" target=\"_blank\">configuración de tu cuenta de Wompi</a> tanto en ambiente de Producción como de Sandbox."
 
 #: includes/admin/wompi-settings.php:34
 msgid "Test mode"

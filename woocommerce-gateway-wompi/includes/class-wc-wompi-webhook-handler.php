@@ -103,7 +103,7 @@ class WC_Wompi_Webhook_Handler {
         switch ( $transaction->status ) {
             case WC_Wompi_API::STATUS_APPROVED:
                 $order->payment_complete( $transaction->id );
-                $this->update_transaction_status( $order, __('Wompi payment APPROVED. TRANSACTION ID: ', 'woocommerce-gateway-wompi') . ' (' . $transaction->id . ')', 'completed' );
+                $this->update_transaction_status( $order, __('Wompi payment APPROVED. TRANSACTION ID: ', 'woocommerce-gateway-wompi') . ' (' . $transaction->id . ')', 'processing' );
                 break;
             case WC_Wompi_API::STATUS_VOIDED:
                 WC_Gateway_Wompi::process_void( $order );
@@ -131,14 +131,22 @@ class WC_Wompi_Webhook_Handler {
             // Set payment method type
             update_post_meta( $order_id, WC_Wompi::FIELD_PAYMENT_METHOD_TYPE, $transaction->payment_method_type );
             // Set customer email
-            update_post_meta( $order_id, '_billing_email', $transaction->customer_email );
-            update_post_meta( $order_id, '_billing_address_index', $transaction->customer_email );
+						if ( ! $order->get_billing_email() ) {
+							update_post_meta( $order_id, '_billing_email', $transaction->customer_email );
+							update_post_meta( $order_id, '_billing_address_index', $transaction->customer_email );
+						}
             // Set first name
-            update_post_meta( $order_id, '_billing_first_name', $transaction->customer_data->full_name );
+						if ( ! $order->get_billing_first_name() ) {
+							update_post_meta( $order_id, '_billing_first_name', $transaction->customer_data->full_name );
+						}
             // Set last name
-            update_post_meta( $order_id, '_billing_last_name', '' );
+						if ( ! $order->get_billing_last_name() ) {
+							update_post_meta( $order_id, '_billing_last_name', '' );
+						}
             // Set phone number
-            update_post_meta( $order_id, '_billing_phone', $transaction->customer_data->phone_number );
+						if ( ! $order->get_billing_phone() ) {
+							update_post_meta( $order_id, '_billing_phone', $transaction->customer_data->phone_number );
+						}
         }
     }
 
@@ -147,7 +155,10 @@ class WC_Wompi_Webhook_Handler {
      */
     public function update_transaction_status( $order, $note, $status ) {
         $order->add_order_note( $note );
-        $order->update_status( $status );
+				$status = apply_filters( 'wc_wompi_order_status', $status, $order );
+				if ( $status ) {
+					$order->update_status( $status );
+				}
     }
 }
 
