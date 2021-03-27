@@ -1,0 +1,10 @@
+#Libraries
+/woocommerce-gateway-wompi/vendor
+/woocommerce-gateway-wompi/wp-content
+
+#PHPStorm
+.idea
+
+#Visual Studio Code
+.vscode
+.phpintel

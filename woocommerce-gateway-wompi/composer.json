@@ -1,0 +1,21 @@
+{
+  "require-dev": {
+    "woocommerce/woocommerce": "dev-master"
+  },
+  "autoload-dev": {
+    "classmap": [
+      "vendor/woocommerce/woocommerce/tests/legacy/framework",
+      "tests/unit-tests/includes"
+    ]
+  },
+  "extra": {
+    "installer-paths": {
+      "vendor/{$vendor}/{$name}": [
+        "woocommerce/woocommerce"
+      ]
+    }
+  },
+  "require": {
+    "phpunit/phpunit": "^7"
+  }
+}

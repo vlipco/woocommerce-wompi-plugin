@@ -29,6 +29,7 @@ class WC_Gateway_Wompi extends WC_Gateway_Wompi_Custom {
         );
         $this->public_key  = $this->testmode ? $options['test_public_key'] : $options['public_key'];
         $this->private_key = $this->testmode ? $options['test_private_key'] : $options['private_key'];
+        $this->event_private_key = $this->testmode ? $options['test_event_private_key'] : $options['event_private_key'];
 
         // Hooks
         add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
@@ -44,6 +45,7 @@ class WC_Gateway_Wompi extends WC_Gateway_Wompi_Custom {
 				if ( ! parent::is_available() ||
 						 ! $this->private_key ||
 						 ! $this->public_key ||
+						 ! $this->event_private_key ||
 						 ! in_array( get_woocommerce_currency(), self::get_supported_currency() )
 				) {
 						return false;

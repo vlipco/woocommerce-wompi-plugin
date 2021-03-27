@@ -52,23 +52,30 @@ class WC_Wompi_Webhook_Handler {
      */
 	public function process_webhook_payment( $response ) {
         $data = $response->data;
-        // Validate transaction response
-        if ( isset( $data->transaction ) ) {
-            $transaction = $data->transaction;
-            $order = new WC_Order( $transaction->reference );
-            if( $this->is_payment_valid( $order, $transaction ) ) {
-                // Update order data
-                $this->update_order_data( $order, $transaction );
-                $this->apply_status( $order, $transaction );
-                status_header( 200 );
-            } else {
-                $this->update_transaction_status( $order, __('Wompi payment validation is invalid. TRANSACTION ID: ', 'woocommerce-gateway-wompi') . ' (' . $transaction->id . ')', 'failed' );
-                status_header( 400 );
-            }
-        } else {
-            WC_Wompi_Logger::log( 'TRANSACTION Response Not Found' );
-            status_header( 400 );
-        }
+		// Validate response checksum
+		if($this->is_valid_checksum($response)){
+	        // Validate transaction response
+	        if ( isset( $data->transaction ) ) {
+	            $transaction = $data->transaction;
+	            $order = new WC_Order( $transaction->reference );
+	            if( $this->is_payment_valid( $order, $transaction ) ) {
+	                // Update order data
+	                $this->update_order_data( $order, $transaction );
+	                $this->apply_status( $order, $transaction );
+	                status_header( 200 );
+	            } else {
+	                $this->update_transaction_status( $order, __('Wompi payment validation is invalid. TRANSACTION ID: ', 'woocommerce-gateway-wompi') . ' (' . $transaction->id . ')', 'failed' );
+	                status_header( 400 );
+	            }
+	        } else {
+	            WC_Wompi_Logger::log( 'TRANSACTION Response Not Found' );
+	            status_header( 400 );
+	        }
+		}
+		else{
+			WC_Wompi_Logger::log('TRANSACTION Invalid checksum');
+			status_header(500);
+		}
     }
 
     /**
@@ -160,6 +167,50 @@ class WC_Wompi_Webhook_Handler {
 					$order->update_status( $status );
 				}
     }
+
+	/**
+	 * Validate response checksum according with https://docs.wompi.co/docs/en/eventos#seguridad
+	 * @param $response
+	 * @return bool
+	 * @throws Exception
+	 */
+	private function is_valid_checksum($response)
+	{
+		try
+		{
+			$toHash = '';
+
+			//concatenate properties
+			$properties = $response->signature->properties;
+			foreach ($properties as $property){
+				$keys = explode('.', $property);
+
+				$result = $response->data;
+				foreach ($keys as $key){
+					$result = $result->{$key};
+				}
+				$toHash .= $result;
+			}
+			//concatenate timestamp
+			$toHash .= $response->timestamp;
+
+			//concatenate event private key
+			$options = WC_Wompi::$settings;
+			if ( 'yes' === $options['testmode'] ) {
+				$toHash .= $options['test_event_private_key'];
+			} else {
+				$toHash .= $options['event_private_key'];
+			}
+
+			//hash and compare
+			return $response->signature->checksum === hash('sha256', $toHash);
+		}
+		catch (\Exception $e)
+		{
+			WC_Wompi_Logger::log('Exception while validating checksum: ' . $e->getMessage());
+			throw $e;
+		}
+	}
 }
 
 new WC_Wompi_Webhook_Handler();
