@@ -3,7 +3,7 @@
 Plugin Name: Wompi Plugin para WooCommerce
 Plugin URI: https://docs.wompi.co/
 Description: Plugin WooCommerce para la pasarela de pagos Wompi.
-Version: 0.1.1
+Version: 0.2.0
 Author: Vlipco SAS
 Author URI: https://wompi.co/
 Domain Path: /languages
@@ -52,7 +52,7 @@ function woocommerce_gateway_wompi_init() {
         add_action( 'admin_notices', 'woocommerce_gateway_wompi_wc_missing_notice' );
         return;
     }
-		
+
 		/**
      * Check if WooCommerce is supported
      */

@@ -38,8 +38,8 @@ class WC_Wompi_Admin_Notices {
 
 		$this->wompi_check_environment();
 
-		foreach ( (array) $this->notices as $notice_key => $notice ) {			
-			echo '<div class="' . esc_attr( $notice['class'] ) . '"><p>' . wp_kses( $notice['message'], array( 'a' => array( 'href' => array(), 'target' => array() ) ) ) . '</p></div>';			 
+		foreach ( (array) $this->notices as $notice_key => $notice ) {
+			echo '<div class="' . esc_attr( $notice['class'] ) . '"><p>' . wp_kses( $notice['message'], array( 'a' => array( 'href' => array(), 'target' => array() ) ) ) . '</p></div>';
 		}
 	}
 
@@ -52,8 +52,10 @@ class WC_Wompi_Admin_Notices {
 		$testmode           = ( isset( $options['testmode'] ) && 'yes' === $options['testmode'] ) ? true : false;
 		$test_pub_key       = isset( $options['test_public_key'] ) ? $options['test_public_key'] : '';
 		$test_secret_key    = isset( $options['test_private_key'] ) ? $options['test_private_key'] : '';
+		$test_event_private_key    = isset( $options['test_event_private_key'] ) ? $options['test_event_private_key'] : '';
 		$live_pub_key       = isset( $options['public_key'] ) ? $options['public_key'] : '';
 		$live_secret_key    = isset( $options['private_key'] ) ? $options['private_key'] : '';
+		$event_private_key    = isset( $options['event_private_key'] ) ? $options['event_private_key'] : '';
 
 		if ( isset( $options['enabled'] ) && 'yes' === $options['enabled'] ) {
 
@@ -67,6 +69,7 @@ class WC_Wompi_Admin_Notices {
                 if (
                     empty( $test_pub_key ) ||
                     empty( $test_secret_key ) ||
+                    empty( $test_event_private_key ) ||
                     empty( $supported_currency ) ) {
                     $this->add_admin_notice( 'wc_wompi', 'notice notice-error', sprintf( __( 'Wompi is in test mode however your test keys may not be valid. Please go to your settings and, <a href="%s">set your Wompi account keys</a>.', 'woocommerce-gateway-wompi' ), $setting_link ) );
                     $keys_valid = false;
@@ -75,6 +78,7 @@ class WC_Wompi_Admin_Notices {
                 if (
                     empty( $live_pub_key ) ||
                     empty( $live_secret_key ) ||
+                    empty( $event_private_key ) ||
                     empty( $supported_currency ) ) {
                     $this->add_admin_notice( 'wc_wompi', 'notice notice-error', sprintf( __( 'Wompi is in live mode however your live keys may not be valid. Please go to your settings and, <a href="%s">set your Wompi account keys</a>.', 'woocommerce-gateway-wompi' ), $setting_link ) );
                     $keys_valid = false;
