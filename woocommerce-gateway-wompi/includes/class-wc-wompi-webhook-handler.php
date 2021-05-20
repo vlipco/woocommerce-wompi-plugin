@@ -143,7 +143,7 @@ class WC_Wompi_Webhook_Handler {
 							update_post_meta( $order_id, '_billing_address_index', $transaction->customer_email );
 						}
             // Set first name
-						if ( ! $order->get_billing_first_name() ) {
+						if ( ! $order->get_billing_first_name() && property_exists($transaction, 'customer_data') && property_exists($transaction->customer_data, 'full_name')) {
 							update_post_meta( $order_id, '_billing_first_name', $transaction->customer_data->full_name );
 						}
             // Set last name
@@ -151,7 +151,7 @@ class WC_Wompi_Webhook_Handler {
 							update_post_meta( $order_id, '_billing_last_name', '' );
 						}
             // Set phone number
-						if ( ! $order->get_billing_phone() ) {
+						if ( ! $order->get_billing_phone()  && property_exists($transaction, 'customer_data') && property_exists($transaction->customer_data, 'phone_number')) {
 							update_post_meta( $order_id, '_billing_phone', $transaction->customer_data->phone_number );
 						}
         }

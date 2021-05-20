@@ -49,7 +49,23 @@ class WC_Wompi_Tests extends WC_Unit_Test_Case {
     }
 
     /**
-     * Test for Check incoming requests for Wompi Webhook data and process them
+     * Test for Check incoming requests without customer_data key
+     */
+    public function test_check_for_webhook_no_customer_data_key() {
+		// Generate response
+		self::$response = Test_Wompi_Data::noCustomerDataResponse();
+		$this->assertIsObject( self::$response );
+
+        $webhook_handler = new Test_WC_Wompi_Webhook_Handler();
+        $result = $webhook_handler->check_for_webhook();
+        $this->assertNull( $result );
+
+		//CheckResponse
+		$webhook_handler->check_order_data();
+    }
+
+    /**
+     * Test for Check incoming requests with no valid checksum
      */
     public function test_check_for_webhook_invalid_checksum() {
 		// Generate response

@@ -38,11 +38,15 @@ class Test_WC_Wompi_Webhook_Handler extends WC_Wompi_Webhook_Handler {
             // Check customer email
             TestCase::assertEquals( $transaction->customer_email, get_post_meta($order_id, '_billing_email', true) );
             // Check first name
-            TestCase::assertEquals( $transaction->customer_data->full_name, get_post_meta($order_id, '_billing_first_name', true) );
+            if ( property_exists($transaction, 'customer_data') && property_exists($transaction->customer_data, 'full_name')) {
+                TestCase::assertEquals($transaction->customer_data->full_name, get_post_meta($order_id, '_billing_first_name', true));
+            }
             // Check last name
             TestCase::assertEquals( '', get_post_meta($order_id, '_billing_last_name', true) );
             // Check phone number
-            TestCase::assertEquals( $transaction->customer_data->phone_number, get_post_meta($order_id, '_billing_phone', true) );
+            if ( property_exists($transaction, 'customer_data') && property_exists($transaction->customer_data, 'phone_number')) {
+                TestCase::assertEquals($transaction->customer_data->phone_number, get_post_meta($order_id, '_billing_phone', true));
+            }
         } else {
             TestCase::assertTrue( false, 'Order status: ' . $status );
         }
