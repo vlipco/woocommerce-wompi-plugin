@@ -52,7 +52,7 @@ return apply_filters(
 			'default'     => '',
 			'desc_tip'    => true,
 		),
-		'test_event_private_key' => array(
+		'test_event_secret_key' => array(
 			'title'       => __( 'Test Event Private Key', 'woocommerce-gateway-wompi' ),
 			'type'        => 'password',
 			'description' => __( 'Get your API keys from your Wompi account.', 'woocommerce-gateway-wompi' ),
@@ -73,7 +73,7 @@ return apply_filters(
 			'default'     => '',
 			'desc_tip'    => true,
 		),
-		'event_private_key' => array(
+		'event_secret_key' => array(
 			'title'       => __( 'Live Event Private Key', 'woocommerce-gateway-wompi' ),
 			'type'        => 'password',
 			'description' => __( 'Get your API keys from your Wompi account.', 'woocommerce-gateway-wompi' ),

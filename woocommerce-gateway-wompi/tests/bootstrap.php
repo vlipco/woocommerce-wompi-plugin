@@ -33,10 +33,10 @@ function _manually_load_plugin() {
 			"testmode" => "yes",
 			"test_public_key" => "pub_test_XXXXXXXXXXXX",
 			"test_private_key" => "prv_test_XXXXXXXXXXXX",
-			"test_event_private_key" => "test_events_XXXXXXXXXXXX",
+			"test_event_secret_key" => "test_events_XXXXXXXXXXXX",
 			"public_key" => "pub_prod_XXXXXXXXXXXX",
 			"private_key" => "prv_prod_XXXXXXXXXXXX",
-			"event_private_key" => "prod_events_XXXXXXXXXXXX",
+			"event_secret_key" => "prod_events_XXXXXXXXXXXX",
 			"logging" => "yes",
 		];
 	});

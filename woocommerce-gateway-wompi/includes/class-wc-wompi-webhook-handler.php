@@ -197,9 +197,9 @@ class WC_Wompi_Webhook_Handler {
 			//concatenate event private key
 			$options = WC_Wompi::$settings;
 			if ( 'yes' === $options['testmode'] ) {
-				$toHash .= $options['test_event_private_key'];
+				$toHash .= $options['test_event_secret_key'];
 			} else {
-				$toHash .= $options['event_private_key'];
+				$toHash .= $options['event_secret_key'];
 			}
 
 			//hash and compare
