@@ -31,24 +31,20 @@ class Test_WC_Wompi_Webhook_Handler extends WC_Wompi_Webhook_Handler {
         $order = new WC_Order( $order_id );
 
         // Check order status
-        $status = $order->get_status();
-        if ( $status == 'processing' ) {
-            // Check transaction id
-            TestCase::assertEquals( $transaction->id, $order->get_transaction_id() );
-            // Check customer email
-            TestCase::assertEquals( $transaction->customer_email, get_post_meta($order_id, '_billing_email', true) );
-            // Check first name
-            if ( property_exists($transaction, 'customer_data') && property_exists($transaction->customer_data, 'full_name')) {
-                TestCase::assertEquals($transaction->customer_data->full_name, get_post_meta($order_id, '_billing_first_name', true));
-            }
-            // Check last name
-            TestCase::assertEquals( '', get_post_meta($order_id, '_billing_last_name', true) );
-            // Check phone number
-            if ( property_exists($transaction, 'customer_data') && property_exists($transaction->customer_data, 'phone_number')) {
-                TestCase::assertEquals($transaction->customer_data->phone_number, get_post_meta($order_id, '_billing_phone', true));
-            }
-        } else {
-            TestCase::assertTrue( false, 'Order status: ' . $status );
+        TestCase::assertTrue( $order->is_paid() );
+        // Check transaction id
+        TestCase::assertEquals( $transaction->id, $order->get_transaction_id() );
+        // Check customer email
+        TestCase::assertEquals( $transaction->customer_email, get_post_meta($order_id, '_billing_email', true) );
+        // Check first name
+        if ( property_exists($transaction, 'customer_data') && property_exists($transaction->customer_data, 'full_name')) {
+            TestCase::assertEquals($transaction->customer_data->full_name, get_post_meta($order_id, '_billing_first_name', true));
+        }
+        // Check last name
+        TestCase::assertEquals( '', get_post_meta($order_id, '_billing_last_name', true) );
+        // Check phone number
+        if ( property_exists($transaction, 'customer_data') && property_exists($transaction->customer_data, 'phone_number')) {
+            TestCase::assertEquals($transaction->customer_data->phone_number, get_post_meta($order_id, '_billing_phone', true));
         }
     }
 
@@ -63,6 +59,6 @@ class Test_WC_Wompi_Webhook_Handler extends WC_Wompi_Webhook_Handler {
 		// Check transaction id
 		TestCase::assertNotEquals( $transaction->id, $order->get_transaction_id() );
 		// Check transaction status
-		TestCase::assertEquals( 'pending', $order->get_status() );
+		TestCase::assertFalse( $order->is_paid() );
     }
 }
