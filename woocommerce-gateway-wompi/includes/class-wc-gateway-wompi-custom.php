@@ -13,6 +13,7 @@ class WC_Gateway_Wompi_Custom extends WC_Payment_Gateway {
     public $testmode;
     public $public_key;
     public $private_key;
+    public $event_secret_key;
     public static $supported_currency = false;
 
     /**
